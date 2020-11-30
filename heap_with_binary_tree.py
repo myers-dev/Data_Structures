@@ -7,6 +7,7 @@ INSERT
 +HEAPIFY-UP (SHIFT-UP)
 +HEAPIFY-DOWN (SHIFT-DOWN)
 +DELETE
+++HEAPIFY
 
 Numbering of the tree nodes are as follows:
     __0__
@@ -25,16 +26,16 @@ Implementation is usig zero-based indeces
 '''
 from binarytree import Node
 from binarytree import build
-from random import randint
+from random import randint  
 
 class Heap:
-    def __init__(self,n=None):
+    def __init__(self,n=None,log=False):
         if n:
             self.heap = [n]
         else:
             self.heap = []
-        self.length = len(self.heap)
         self.visualize = True
+        self.log = log
 
     def parent(self,idx):
         return (( idx - 1 )//2 )
@@ -45,14 +46,25 @@ class Heap:
     def children_right(self,idx):
         return ( idx*2 + 2 )
 
+    def length(self):
+        return ( len(self.heap) )
+
     def heapify_up(self,idx):
-        #self.show(f"heapifying up {idx}")
+        if self.log:
+            self.show(f"heapifying up {idx}")
+            pass
         while idx > 0 and self.heap[self.parent(idx)] > self.heap[idx]:
-            #self.show(f"Performing swap between indexes {self.parent(idx)} and {idx} , values {self.heap[self.parent(idx)]} , {self.heap[idx]}")
+            if self.log:
+                self.show(f"Performing swap between indexes {self.parent(idx)} and {idx} , values {self.heap[self.parent(idx)]} , {self.heap[idx]}")
+                pass
             self.heap[self.parent(idx)],self.heap[idx] = self.heap[idx],self.heap[self.parent(idx)]
-            #self.show(f"Resulting tree after swap")
+            if self.log:
+                self.show(f"Resulting tree after swap")
+                pass
             idx = self.parent(idx)
-        #self.show(f"Heapify finished on {idx}")
+        if self.log:
+            self.show(f"Heapify finished on {idx}")
+            pass
         return
     
     def heapify_down(self,idx):
@@ -95,16 +107,33 @@ class Heap:
                     self.heap[self.children_right(idx)],self.heap[idx] = \
                     self.heap[idx],self.heap[self.children_right(idx)]
                     idx = self.children_right(idx) 
-            #self.show("Was another swap...")              
+            if self.log:
+                self.show("Was another swap...") 
+                pass             
 
-        #self.show(f"Final : Extracted {result_min}")
+        if self.log:
+            self.show(f"Final : Heapify_down completed at {idx}")
+            pass
         return
     
     def delete(self,idx):
         '''
-        to be implemented
+        replacing target element with the last element,shrinking the heap and performing heapify down
         '''
-        return
+        if self.log:
+            self.show(f"Before deleting at index {idx}")
+            pass
+        #print(f"{self.heap} {idx}")
+        if idx == len(self.heap) - 1:
+            self.heap.pop()
+            return
+
+        self.heap[idx] = self.heap.pop()
+        self.heapify_down(idx)
+        if self.log:
+            self.show(f"Delete at index {idx} performed")
+            pass
+        return  
 
     def show(self,message):
         '''
@@ -121,11 +150,18 @@ class Heap:
         # Inserting as a last element
         self.heap.append(n)
         self.heapify_up(len(self.heap) - 1)
-        #self.show(f"Inserted {n}")
+        if self.log:
+            self.show(f"Inserted {n}")
+            pass
 
     def extract_min(self):
+        if not self.heap:
+            return(None)
+
         result_min = self.heap[0] 
-        #self.show(f'We are extracting {result_min}')
+        if self.log:
+            self.show(f'We are extracting {result_min}')
+            pass
         if len(self.heap) == 1:
             self.heap.pop()
             return(result_min)
@@ -133,19 +169,31 @@ class Heap:
         Swapping last element and root
         '''
         self.heap[0]=self.heap.pop()
-        #self.show(f'Swapping last element={self.heap[0]} and root={result_min}')
+        if self.log:
+            self.show(f'Swapping last element={self.heap[0]} and root={result_min}')
+            pass
         '''
         Bubble down ; The key idea is to swap the root node with the smaller of its two children
         '''
         self.heapify_down(0)
-        #self.show(f"Final : Extracted {result_min}")
+        if self.log:
+            self.show(f"Final : Extracted {result_min}")
+            pass
         return(result_min)
+
+def heapify(self,lst):
+    '''
+    to be implemented
+    '''
+    return
 
 def main():
     h = Heap()
 
     for i in range(100):
         h.insert(randint(0,100))
+    # for i in range(16):
+    #     h.delete(randint(0,h.length() - 1))
     s = []
     for i in range(100):
         s.append(h.extract_min())
