@@ -37,6 +37,9 @@ class Heap:
         self.visualize = True
         self.log = log
 
+    def __str__(self):
+        return("[" + " ,".join([str(elem) for elem in self.heap]) + "]")
+    
     def parent(self,idx):
         return (( idx - 1 )//2 )
 
@@ -181,24 +184,29 @@ class Heap:
             pass
         return(result_min)
 
-def heapify(self,lst):
-    '''
-    to be implemented
-    '''
-    return
+    def heapify(self,lst):
+        self.heap = lst
+        for idx in range(len(lst)):
+            self.heapify_up(idx)
+        return
 
 def main():
     h = Heap()
 
     for i in range(100):
         h.insert(randint(0,100))
-    # for i in range(16):
-    #     h.delete(randint(0,h.length() - 1))
     s = []
     for i in range(100):
         s.append(h.extract_min())
     print(s)
     print(all([s[i] <= s[i+1] for i in range(len(s)-2)]))
 
+    h = Heap()
+    s = []
+    for i in range(32):
+        s.append(randint(0,100))
+    print(s)
+    h.heapify(s)
+    print(build(h.heap))
 
 main()
