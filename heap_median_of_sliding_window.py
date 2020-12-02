@@ -51,7 +51,7 @@ class SlidingWindowMedian:
 
   def find_sliding_window_median(self, nums, k):
     if k == 1:
-      return(nums[i])
+      return(nums)
 
     medians = []
 
