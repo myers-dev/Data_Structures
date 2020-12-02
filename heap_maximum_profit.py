@@ -37,16 +37,17 @@ attempts
 '''
 from heapq import heappop
 from heapq import heappush
+from collections import deque
 
 def find_maximum_capital(capital, profits, numberOfProjects, initialCapital):
     max_heap = []
-    
+    capital_profits = deque( [(capital[i],profits[i]) for i in range(len(capital))] )
+ 
     budget = initialCapital
 
     while numberOfProjects > 0:
-        while len(capital) > 0 and capital[0] <= budget:
-            heappush(max_heap,-profits.pop(0))
-            capital.pop(0)
+        while len(capital_profits) > 0 and capital_profits[0][0] <= budget:
+            heappush(max_heap,-capital_profits.popleft()[1])
         budget+=-heappop(max_heap)
         numberOfProjects-=1
 
