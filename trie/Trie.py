@@ -70,4 +70,5 @@ if __name__ == '__main__':
     t.insert('analytic')
     t.insert('analysis')
     t.insert('computer')
+    
     t.print_trie()
