@@ -17,11 +17,13 @@ class Trie:
         node = self.root
 
         for symbol in key:
+            #print(f"Getting {symbol}")
             # Iterating over childrens 
-            if node.children[self.position(symbol)] is not None:
-                node = node.children[self.position(symbol)]
-            else:
-                node = TrieNode(symbol)
+            if node.children[self.position(symbol)] is None:
+                #print(f"Creating {symbol}")
+                node.children[self.position(symbol)] = TrieNode(symbol)
+            #print(node.children)
+            node = node.children[self.position(symbol)]
         node.is_end_word = True
     
         return()
@@ -50,11 +52,12 @@ class Trie:
         if node.is_end_word:
             print(word)
 
-        print('print_trie started')
+        #print('print_trie started')
+        #print(node.children)
 
         for child in node.children:
             if child and child.char is not None:
-                print(f'->{child.char}')
+                #print(f'->{child.char}')
                 self.print_trie(child, word)
 
         return()
@@ -64,4 +67,7 @@ if __name__ == '__main__':
     t = Trie()
 
     t.insert('analgin')
+    t.insert('analytic')
+    t.insert('analysis')
+    t.insert('computer')
     t.print_trie()
