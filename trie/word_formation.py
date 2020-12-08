@@ -57,7 +57,7 @@ def is_formation_possible(dictionary, word):
 
 if __name__ == '__main__':
     dictionary = ["the", "hello", "there", "answer", "any",
-                     "by", "world", "their", "abc"]
+                     "by", "world", "their", "abc", "educative"]
 
     word = "helloworld"
     print(is_formation_possible(dictionary,word))
@@ -70,3 +70,6 @@ if __name__ == '__main__':
 
     word = "thethe"
     print(is_formation_possible(dictionary,word)) 
+
+    word = "theeducativethere"
+    print(is_formation_possible(dictionary,word))
