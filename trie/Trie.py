@@ -32,6 +32,9 @@ class Trie:
     def has_no_children(self, current_node):   
         return(-1)
 
+    def get_root(self):
+        return(self.root)
+
     # Recursive function to delete given key
     def delete_helper(self, key, current_node, length, level):
         return(-1)
@@ -50,6 +53,7 @@ class Trie:
             word+=node.char
 
         if node.is_end_word:
+            #print(f"Debug {node.is_end_word} {node.char}")
             print(word)
 
         #print('print_trie started')

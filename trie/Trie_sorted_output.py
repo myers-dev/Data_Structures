@@ -27,7 +27,6 @@ def find_words(root):
     find_words_helper(root,'',result)
     return(result)
 
-
 if __name__ == '__main__':
     t = Trie()
 
