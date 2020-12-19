@@ -1,0 +1,17 @@
+Define graph; A graph is a set of vertices and a collection of edges that each connect a pair of vertices
+When vertices are adjacent to one another ?; When there is an edge connecting two vertices, we say that the vertices are adjacent to one another
+When edge is incident to both vertices ?; When there is an edge connecting two vertices, we say that the vertices are adjacent to one another and that the edge is incident to both vertices
+Define degree of the vertice; The degree of a vertex is the number of edges incident to it.
+Define subgraph; A subgraph is a subset of a graph’s edges (and associated vertices) that constitutes a graph.
+Define a path within a graph; A path in a graph is a sequence of vertices connected by edges.
+Define a simple path within a graph;  A simple path is one with no repeated vertices.
+Define a cycle within a graph; A cycle is a path with at least one edge whose first and last vertices are the same. 
+Define a simple cycle within a graph; A simple cycle is a cycle with no repeated edges or vertices (except the requisite repeti- tion of the first and last vertices)
+Define a lengh of path within a graph; The length of a path or a cycle is its number of edges.
+When one vertex is connected to another ?; We say that one vertex is connected to another if there exists a path that contains both of them.
+When graph considered to be connected ? ; A graph is connected if there is a path from every vertex toe very other vertex in the graph
+Define acyclic graph; An acyclic graph is a graph without a cycles
+Define a tree; A tree is an acyclic connected graph
+Define a forest; A disjoint set of trees called a forest
+Define a spanning tree; A spanning tree of a connected graph is a subgraph that contains all of that graph vertices and is a single tree
+Define a spannign forest of a graph; A spanning forest of a graph is the union of spanning trees of its connected components
