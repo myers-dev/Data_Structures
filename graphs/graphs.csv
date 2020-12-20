@@ -15,3 +15,4 @@ Define a tree; A tree is an acyclic connected graph
 Define a forest; A disjoint set of trees called a forest
 Define a spanning tree; A spanning tree of a connected graph is a subgraph that contains all of that graph vertices and is a single tree
 Define a spannign forest of a graph; A spanning forest of a graph is the union of spanning trees of its connected components
+Define a bipartite graph; A bipartite graph is a graph whose vertices we can divide into two sets such that all edges connect a vertex in one set with a vertex in the other set. 

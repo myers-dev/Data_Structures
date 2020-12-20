@@ -16,46 +16,41 @@ from Stack import MyStack
 # Depth First Traversal of Graph "g" from source vertex
 
 def dfs_traversal_helper(g, source, visited):
+    print(f"Called with {source}")
     result = ""
-    # Create Stack(Implemented in previous lesson) for Depth First Traversal
-    # and Push source in it
     stack = MyStack()
-    stack.push(source)
+
+    result+=str(source)
     visited[source] = True
-    # Traverse while stack is not empty
-    while (stack.is_empty() is False):
-        # Pop a vertex/node from stack and add it to the result
-        current_node = stack.pop()
-        result += str(current_node)
-        # Get adjacent vertices to the current_node from the array,
-        # and if they are not already visited then push them in the stack
-        temp = g.array[current_node].head_node
-        while (temp is not None):
-            if (visited[temp.data] is False):
-                stack.push(temp.data)
-                # Visit the node
-                visited[temp.data] = True
-            temp = temp.next_element
-    return result, visited  # For the above graph it should return "12453"
+    node = g.array[source].get_head()
+    while node:
+        #print(f"s node={node}")
+        stack.push(node)
+        node = node.next_element
+
+    while not stack.is_empty():
+        node_number = stack.pop().data
+        #print (f"visited.keys={visited.keys()},stack.size()={stack.size()},node_number={node_number},result={result}")
+        result+=str(node_number)
+        if node_number not in visited.keys():
+                visited[node_number] = True
+                node = g.array[node_number].get_head()
+
+                while node:
+                    #print(f"m node.data={node.data}")
+                    stack.push(node)
+                    node = node.next_element
+
+    #print(len(visited.keys()),len(g.array))
+    if len(visited.keys()) < len(g.array):
+        for node_number in range(len(g.array)):
+            if node_number not in visited.keys():
+                result+=dfs_traversal_helper(g,node_number,visited)
+    print(f"Returned {result}")
+    return (result)
 
 def dfs_traversal(g, source):
-    result = ""
-    num_of_vertices = g.vertices
-    if num_of_vertices == 0:
-        return result
-    # A list to hold the history of visited nodes
-    # Make a node visited whenever you enqueue it into queue
-    visited = []
-    for i in range(num_of_vertices):
-        visited.append(False)
-    # Start from source
-    result, visited = dfs_traversal_helper(g, source, visited)
-    # visit remaining nodes
-    for i in range(num_of_vertices):
-        if visited[i] is False:
-            result_new, visited = dfs_traversal_helper(g, i, visited)
-            result += result_new
-    return result
+    return ( dfs_traversal_helper(g, source, dict()) )
 
 g = Graph(7)
 num_of_vertices = g.vertices
@@ -80,6 +75,6 @@ else:
     g.add_edge(3, 4)
     g.add_edge(3, 5)
 
-    g.print_graph()
+    # g.print_graph()
 
     print(dfs_traversal(g, 1))
