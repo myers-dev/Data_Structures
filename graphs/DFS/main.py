@@ -16,7 +16,7 @@ from Stack import MyStack
 # Depth First Traversal of Graph "g" from source vertex
 
 def dfs_traversal_helper(g, source, visited):
-    print(f"Called with {source}")
+    #print(f"Called with {source}")
     result = ""
     stack = MyStack()
 
@@ -46,7 +46,7 @@ def dfs_traversal_helper(g, source, visited):
         for node_number in range(len(g.array)):
             if node_number not in visited.keys():
                 result+=dfs_traversal_helper(g,node_number,visited)
-    print(f"Returned {result}")
+    #print(f"Returned {result}")
     return (result)
 
 def dfs_traversal(g, source):
