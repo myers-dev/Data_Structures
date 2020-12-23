@@ -4,6 +4,8 @@ def inorder(root):
     left_stack = [root]
     right_stack = []
 
+    result=[]
+
     while left_stack or right_stack:
         #print (f"left stack {left_stack}")
         #print (f"right stack {right_stack}")
@@ -14,10 +16,10 @@ def inorder(root):
                 left_stack.append(node.left)
         else:
             node = right_stack.pop()
-            print(node.val)
+            result.append(node.val)
             if node.right:
                 left_stack.append(node.right)
-
+    return(result)
 
 if __name__=='__main__':
 
@@ -43,4 +45,4 @@ if __name__=='__main__':
 
     print(root)
 
-    inorder(root)
+    print(inorder(root))
