@@ -79,16 +79,13 @@ class graph:
 
 if __name__ == "__main__":
     
-    g = graph([vertex(1,False),
-               vertex(2,False),
-               vertex(3,False),
-               vertex(4,False),
-               vertex(5,False)],
-               [edge(1,False,1,2),
-                edge(1,False,1,3),
-                edge(2,False,2,3),
-                edge(3,False,2,4),
-                edge(2,False,4,5),
-                edge(3,False,3,5)]               
-               )
+    vertices = 5
+    edges = [[1,1,2],
+            [1,1,3],
+            [2,2,3],
+            [3,2,4],
+            [2,4,5],
+            [3,3,5]]    
+    g = graph([],[])
+    g.generate_graph(vertices,edges)
     g.print_graph()
