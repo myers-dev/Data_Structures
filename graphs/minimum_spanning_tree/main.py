@@ -45,6 +45,32 @@ class graph:
   def find_min_spanning_tree(self):
     weight = -1
     # TODO: Write - Your - Code
+    #
+    # Going over all neighbors ( BFS )
+    # Add first node to queue
+    # queue not empty ?
+    #   pick element from queue
+    #     go over all neighbors
+    #         edge is visited ?
+    #         not ? weight of edge to reach neighbor = current weight + weight of edge
+    #         yes ? 
+    #           Compare weight to reach neighbor with existing; 
+    #             If new weight is smaller than 
+    #                 update weight
+    #                 update neighbor as not visited
+    #                 add neighbor veritce to queue
+    #             Else
+    #                do nothing
+    # 
+    # Calculate and return the sum
+    stack = [ self.g[0] ]
+
+    while stack:
+      current = stack.pop()
+      print(f"Popped {current} stack {stack}")
+
+
+
     return weight
 
   def print_graph(self):
@@ -89,3 +115,6 @@ if __name__ == "__main__":
     g = graph([],[])
     g.generate_graph(vertices,edges)
     g.print_graph()
+    print(g.get_graph())
+
+    g.print_mst()
