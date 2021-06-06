@@ -46,30 +46,32 @@ class graph:
     weight = -1
     # TODO: Write - Your - Code
     #
+    # only edges have weight
+    #
     # Going over all neighbors ( BFS )
-    # Add first node to queue
+    #
+    # Add first vertice to queue
     # queue not empty ?
-    #   pick element from queue
-    #     go over all neighbors
-    #         edge is visited ?
-    #         not ? weight of edge to reach neighbor = current weight + weight of edge
-    #         yes ? 
-    #           Compare weight to reach neighbor with existing; 
-    #             If new weight is smaller than 
+    #   pick vertice from queue
+    #     mark vertice as visited
+    #     go over all neighbors(vertices) = all edges where src=current vertice
+    #         
+    #           Compare weight of edge to reach neighbor with existing; 
+    #             If new weight is smaller than existing
     #                 update weight
     #                 update neighbor as not visited
-    #                 add neighbor veritce to queue
+    #                 add neighbor vertice to queue
     #             Else
     #                do nothing
     # 
     # Calculate and return the sum
-    stack = [ self.g[0] ]
+    stack = [ self.g[0] ] # self.g = vertices ; self.e = edges
 
     while stack:
-      current = stack.pop()
-      print(f"Popped {current} stack {stack}")
-
-
+      current_vertex = stack.pop() 
+      print(f"Popped vertex ( {current_vertex.id} {current_vertex.visited} ) stack length={len(stack)}")
+      current_edges = [ e for e in g.e if e.src == current_vertex ]
+      print(f"Edges for current vertex {current_vertex.id} are {[ (x.src.id,x.dest.id) for x in current_edges]}")
 
     return weight
 
@@ -117,4 +119,4 @@ if __name__ == "__main__":
     g.print_graph()
     print(g.get_graph())
 
-    g.print_mst()
+    g.print_mst(g.find_min_spanning_tree())
