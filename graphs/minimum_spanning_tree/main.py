@@ -43,35 +43,31 @@ class graph:
 
 
   def find_min_spanning_tree(self):
-    weight = -1
-    # TODO: Write - Your - Code
-    #
-    # only edges have weight
-    #
-    # Going over all neighbors ( BFS )
-    #
-    # Add first vertice to queue
-    # queue not empty ?
-    #   pick vertice from queue
-    #     mark vertice as visited
-    #     go over all neighbors(vertices) = all edges where src=current vertice
-    #         
-    #           Compare weight of edge to reach neighbor with existing; 
-    #             If new weight is smaller than existing
-    #                 update weight
-    #                 update neighbor as not visited
-    #                 add neighbor vertice to queue
-    #             Else
-    #                do nothing
-    # 
-    # Calculate and return the sum
-    stack = [ self.g[0] ] # self.g = vertices ; self.e = edges
 
-    while stack:
-      current_vertex = stack.pop() 
-      print(f"Popped vertex ( {current_vertex.id} {current_vertex.visited} ) stack length={len(stack)}")
-      current_edges = [ e for e in g.e if e.src == current_vertex ]
-      print(f"Edges for current vertex {current_vertex.id} are {[ (x.src.id,x.dest.id) for x in current_edges]}")
+    # TODO: Write - Your - Code
+    # A minimum spanning tree (MST) or minimum weight spanning tree is a subset of the edges of a connected, edge-weighted undirected graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight
+    #
+    # MST = 0
+    # Mark vertex[0] as Visited
+    # while exist non-visited vertices:
+    #   select MIN from ( NON VISITED edges from VISITED vertices pointed to NON VISITED vertices )
+    #      mark vertice as VISITED
+    #      mark edge as VISITED
+    #      add cost of EDGE to MST
+   
+    self.g[0].visited = True
+    weight = 0
+
+    while not all([x.visited for x in self.g]):
+      visited_vertices = [ x.id for x in self.g if x.visited ]
+      #print(f"visited_vertices {visited_vertices}")
+      edges = [ e for e in self.e if not e.visited and e.src.id in visited_vertices and e.dest.id not in visited_vertices ]      
+      #print(edges)
+      min_edge = min(edges,key=lambda x: x.weight)
+      min_edge.visited = True
+      self.g[min_edge.dest.id - 1].visited = True
+      weight+=min_edge.weight
+
 
     return weight
 
@@ -116,7 +112,7 @@ if __name__ == "__main__":
             [3,3,5]]    
     g = graph([],[])
     g.generate_graph(vertices,edges)
-    g.print_graph()
-    print(g.get_graph())
+    #g.print_graph()
+    #print(g.get_graph())
 
     g.print_mst(g.find_min_spanning_tree())
