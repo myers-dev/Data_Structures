@@ -11,9 +11,10 @@ class graph:
   def __init__(self, g):
     self.g = g
     
-  # This method creates a graph from a list of words. A node of
+  # This method creates a graph from a list of words. A vertex (self.g[] = value, visited, adj_vertices[], in_vertices[]) of
   # the graph contains a character representing the start or end
   # character of a word.
+  # edge is connecting nodes (directed)
   def create_graph(self, words_list):
     for i in range(len(words_list)):
       word = words_list[i]                              # starting from word 0 to last word
@@ -76,8 +77,19 @@ class graph:
 # 2) In degree and out degree of every vertex is same.
 
 # We can detect singly connected component using Kosaraju’s DFS based simple algorithm.
-# To compare in degree and out degree, we need to store in degree an out degree of every vertex. 
+# To compare in degree and out degree, we need to store in degree an out degree of every vertex. <-- already done !
 # Out degree can be obtained by size of adjacency list. In degree can be stored by creating an array of size equal to number of vertices.
+
+# Kosaraju's algorithm
+# https://www.geeksforgeeks.org/strongly-connected-components/
+#
+# 1. Create an empty stack ‘S’ and do DFS traversal of a graph. 
+#     In DFS traversal, after calling recursive DFS for adjacent vertices of a vertex, push the vertex to stack
+# 2. Reverse directions of all arcs to obtain the transpose graph. ( change adj to in , in to adj)
+# 3. One by one pop a vertex from S while S is not empty. Let the popped vertex be ‘v’. 
+#     Take v as source and do DFS (call DFSUtil(v)). The DFS starting from v prints strongly connected component of v.
+
+
 
 
   # This method returns TRUE if out degree of each vertex is equal
@@ -94,6 +106,7 @@ class graph:
   # all the nodes, returns FALSE otherwise
   def can_chain_words_rec(self, node, starting_node):
 
+    
     node.visited = True
 
     # Base case
@@ -118,6 +131,10 @@ class graph:
 
   def can_chain_words(self, list_size):
     # Empty list and single word cannot form a chain
+
+    # 1. Verifying if all nodes belongs to strongly connected component
+    # 2. Verifying if in degrees and out degrees are the same
+
     return (False)
     
   def print_graph(self):
