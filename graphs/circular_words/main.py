@@ -1,8 +1,8 @@
 class vertex:                                           # 
   def __init__(self, value, visited):                   #   Class vertex has value ( letter )
     self.value = value                                  #                    visited indicator
-    self.visited = visited                              #                    adj_vertices  ?
-    self.adj_vertices = []                              #                    in_vertices   ?
+    self.visited = visited                              #                    adj_vertices  array of vertices represented last of the word starting from this letter
+    self.adj_vertices = []                              #                    in_vertices   array of vertices represented first letter of the word ending with this letter
     self.in_vertices = []                               #
   
 class graph:
@@ -56,8 +56,8 @@ class graph:
   # This method adds an edge from start vertex to end vertex by
   # adding the end vertex in the adjacency list of start vertex
   # It also adds the start vertex to the in_vertices of end vertex
-  def add_edge(self, start, end):                       # adj_vertices -> vertice corresponding to the last letter of the word  
-    start.adj_vertices.append(end)                      # in_vertices -> vertice corresponding to the first letter of the word
+  def add_edge(self, start, end):                       # adj_vertices -> vertice corresponding to the last letter of the  word starting from this letter 
+    start.adj_vertices.append(end)                      # in_vertices -> vertice corresponding to the first letter of the  word ending with this letter
     end.in_vertices.append(start)                       # Example [ eve, eat, ripe,tear ]
                                                         #      e            t       r
                                                         # adj: ['e', 't']   ['r']   ['e']
@@ -105,37 +105,40 @@ class graph:
   # This method returns TRUE if the graph has a cycle containing
   # all the nodes, returns FALSE otherwise
   def can_chain_words_rec(self, node, starting_node):
-
-    
     node.visited = True
 
     # Base case
     # return TRUE if all nodes have been visited and there
     # exists an edge from the last node being visited to
     # the starting node
-    adj = node.adj_vertices
+    adj = node.adj_vertices  # first letters of words , where end letter == node.value
     if self.all_visited():
       for i in range(len(adj)):
         if adj[i] == starting_node:
           return True
-    print("node.value=",node.value,"node.adj_vertices()=",[ x.value for x in node.adj_vertices ])
+    #print("node.value=",node.value,"node.adj_vertices()=",[ x.value for x in node.adj_vertices ])
 
     # Recursive case
-    for i in range(len(adj)):
+    for i in range(len(adj)): # vertices starting from this letter
       if adj[i].visited == False:
         node = adj[i]
         if self.can_chain_words_rec(node, starting_node):
           return True
-    print("returning False","node.value=",node.value,"node.adj_vertices()=",[ x.value for x in node.adj_vertices ])
+    #print("returning False","node.value=",node.value,"node.adj_vertices()=",[ x.value for x in node.adj_vertices ])
     return False
 
-  def can_chain_words(self, list_size):
+  def can_chain_words(self):
     # Empty list and single word cannot form a chain
 
     # 1. Verifying if all nodes belongs to strongly connected component
+    if not (self.can_chain_words_rec(self.g[0],0) and self.all_visited):
+      print ("Condition 1",self.all_visited()) # <<<< --- here
+      return False
     # 2. Verifying if in degrees and out degrees are the same
+    if not self.out_equals_in():
+      return False
 
-    return (False)
+    return (True)
     
   def print_graph(self):
     for i in range(len(self.g)):
@@ -148,21 +151,21 @@ class graph:
 import unittest
 import sys
 
-for list_of_words in [ ['eve', 'eat', 'ripe', 'tear'] , ['aba','aba'] , ['deg','fed'] , ['ghi', 'abc', 'def', 'xyz'] ]:
-  word = graph([])
-  print(list_of_words)
-  word.create_graph(list_of_words)
-  for element in word.g:
-    print(f"Value {element.value}")
-    print(f"   adj: {[x.value for x in element.adj_vertices]}")
-    print(f"   in : {[x.value for x in element.in_vertices]}")
+# for list_of_words in [ ['eve', 'eat', 'ripe', 'tear'] , ['aba','aba'] , ['deg','fed'] , ['ghi', 'abc', 'def', 'xyz'] ]:
+#   word = graph([])
+#   print(list_of_words)
+#   word.create_graph(list_of_words)
+#   for element in word.g:
+#     print(f"Value {element.value}")
+#     print(f"   adj: {[x.value for x in element.adj_vertices]}")
+#     print(f"   in : {[x.value for x in element.in_vertices]}")
   
-  print(word.can_chain_words_rec(word.g[0],0))
-  sys.exit()
-  # Check for in/out equality
-  print("In/Out degrees equality:",g.out_equals_in())
+#   print(word.can_chain_words_rec(word.g[0],0))
+#   sys.exit()
+#   # Check for in/out equality
+#   print("In/Out degrees equality:",g.out_equals_in())
 
-sys.exit()
+# sys.exit()
 
 class verification_tests(unittest.TestCase):
 
@@ -170,25 +173,25 @@ class verification_tests(unittest.TestCase):
     g = graph([])
     list_of_words=['eve', 'eat', 'ripe', 'tear']
     g.create_graph(list_of_words)
-    self.assertTrue(g.can_chain_words_rec(0))
+    self.assertTrue(g.can_chain_words())
     
   def test_case2(self):
     g = graph([])
     list_of_words=['aba','aba']
     g.create_graph(list_of_words)
-    self.assertTrue(g.can_chain_words_rec(0)) 
+    self.assertTrue(g.can_chain_words()) 
 
   def test_case3(self):
     g = graph([])
     list_of_words=['deg','fed']
     g.create_graph(list_of_words)
-    self.assertFalse(g.can_chain_words_rec(0)) 
+    self.assertFalse(g.can_chain_words()) 
     
   def test_case4(self):
     g = graph([])
     list_of_words=['ghi', 'abc', 'def', 'xyz']
     g.create_graph(list_of_words)
-    self.assertFalse(g.can_chain_words_rec(0))
+    self.assertFalse(g.can_chain_words())
 
 if __name__ == '__main__':
     unittest.main()
