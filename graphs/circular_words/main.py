@@ -131,11 +131,12 @@ class graph:
     # Empty list and single word cannot form a chain
 
     # 1. Verifying if all nodes belongs to strongly connected component
-    if not (self.can_chain_words_rec(self.g[0],0) and self.all_visited):
-      print ("Condition 1",self.all_visited()) # <<<< --- here
+    if not (self.can_chain_words_rec(self.g[0],self.g[0]) and self.all_visited):
+      print ("Condition 1",self.all_visited())
       return False
     # 2. Verifying if in degrees and out degrees are the same
     if not self.out_equals_in():
+      print ("Condition 2",self.out_equals_in())
       return False
 
     return (True)
@@ -180,7 +181,7 @@ class verification_tests(unittest.TestCase):
     list_of_words=['aba','aba']
     g.create_graph(list_of_words)
     self.assertTrue(g.can_chain_words()) 
-
+    
   def test_case3(self):
     g = graph([])
     list_of_words=['deg','fed']
