@@ -16,6 +16,7 @@ class graph:
         self.vertices = [ vertice(id) for id in range(size) ] # array with vertices = contains vertice id , indegree, inpath for vertice and edge
 
     def insert(self,sd):
+        
         source,destination = sd
 
         self.vertices[source].neighbors.append(destination)
@@ -86,30 +87,40 @@ class graph:
         #print(f"return_path={return_path}")
         return (return_path)
 
-
-def print_orders(tasks, prerequisites):
+def find_order(w):
     # populating graph
-    g = graph(tasks)
-    for p in prerequisites:
-        g.insert(p)
-    
+    #print(w)
+    d = {b:a for (a,b) in enumerate(set("".join(w)))}
+    rd = { d[a]:a for a in d }
+
+    #print(d)
+    g = graph(len(d))
+
+    for i in range(len(w) - 1):
+        for j in range(min(len(w[i]),len(w[i+1]))):
+            if w[i][j] != w[i+1][j]:
+                
+                src = d[w[i][j]]
+                dst = d[w[i+1][j]]
+                
+                #print(w[i][j],'->',w[i+1][j],[src,dst])
+                g.insert([src,dst])
+                break
+
     #g.display_graph()
 
     paths = g.dfs_traversal()
     #print(f"Here is a final result : {paths}")
     for path_id in range(len(paths)):
-        if len(paths[path_id]) == tasks:
-            print(f"{path_id + 1} {paths[path_id]}")
+        print(w," ".join([ rd[l] for l in paths[path_id] ])  )
+
+    return("")
 
 def main():
-  print("Task Orders: ")
-  print_orders(3, [[0, 1], [1, 2]])
-
-  print("Task Orders: ")
-  print_orders(4, [[3, 2], [3, 0], [2, 0], [2, 1]])
-
-  print("Task Orders: ")
-  print_orders(6, [[2, 5], [0, 5], [0, 4], [1, 4], [3, 2], [1, 3]])
+  print("Character order: " + find_order(["ba", "bc", "ac", "cab"]))
+  print("Character order: " + find_order(["cab", "aaa", "aab"]))
+  print("Character order: " + find_order(["ywx", "wz", "xww", "xz", "zyy", "zwz"]))
 
 
 main()
+
