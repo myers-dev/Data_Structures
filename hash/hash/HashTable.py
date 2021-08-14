@@ -59,7 +59,7 @@ class HashTable:
         b_index = self.get_index(key)
         if self.bucket[b_index] is None:
             self.bucket[b_index] = HashEntry(key, value)
-            print(key, "-", value, "inserted at index:", b_index)
+            #print(key, "-", value, "inserted at index:", b_index)
             self.size += 1
         else:
             head = self.bucket[b_index]
@@ -69,10 +69,10 @@ class HashTable:
                     break
                 elif head.nxt is None:
                     head.nxt = HashEntry(key, value)
-                    print(key, "-", value, "inserted at index:", b_index)
+                    #print(key, "-", value, "inserted at index:", b_index)
                     self.size += 1
                     break
-                print("Iterating over Linked List,",head.value,head.key)
+                #print("Iterating over Linked List,",head.value,head.key)
                 head = head.nxt
 
         load_factor = float(self.size) / float(self.slots)
@@ -101,7 +101,7 @@ class HashTable:
         # If key exists at first slot
         if head.key == key:
             self.bucket[b_index] = head.nxt
-            print(key, "-", head.value, "deleted")
+            #print(key, "-", head.value, "deleted")
             # Decrease the size by one
             self.size -= 1
             return self
@@ -111,7 +111,7 @@ class HashTable:
             # If key exists
             if head.key == key:
                 prev.nxt = head.nxt
-                print(key, "-", head.value, "deleted")
+                #print(key, "-", head.value, "deleted")
                 # Decrease the size by one
                 self.size -= 1
                 return
