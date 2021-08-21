@@ -19,9 +19,44 @@ class LinkedList:
 
     def insert_at_head(self, dt):
         temp_node = Node(dt)
+        if(self.is_empty()):
+            self.head_node = temp_node
+            return self.head_node
+
         temp_node.next_element = self.head_node
         self.head_node = temp_node
         return self.head_node
+
+    # Inserts a value at the end of the list
+    def insert_at_tail(self, value):
+        # Creating a new node
+        new_node = Node(value)
+
+        # Check if the list is empty, if it is simply point head to new node
+        if self.get_head() is None:
+            self.head_node = new_node
+            return
+
+        # if list not empty, traverse the list to the last node
+        temp = self.get_head()
+
+        while temp.next_element is not None:
+            temp = temp.next_element
+
+        # Set the nextElement of the previous node to new node
+        temp.next_element = new_node
+        return
+
+    def length(self):
+        # start from the first element
+        curr = self.get_head()
+        length = 0
+
+        # Traverse the list and count the number of nodes
+        while curr is not None:
+            length += 1
+            curr = curr.next_element
+        return length
 
     def print_list(self):
         if(self.is_empty()):
@@ -83,13 +118,27 @@ class LinkedList:
         print(dt, " is not in List!")
         return None
 
-    def length(self):
-        # start from the first element
-        curr = self.get_head()
-        length = 0
+    def remove_duplicates(self):
+        if self.is_empty():
+            return
 
-        # Traverse the list and count the number of nodes
-        while curr is not None:
-            length += 1
-            curr = curr.next_element
-        return length
+        current_node = self.get_head()
+        prev_node = self.get_head()
+        # To store values of nodes which we already visited
+        visited_nodes = set()
+        # If List is not empty and there is more than 1 element in List
+        if not self.is_empty() and current_node.next_element:
+            while current_node:
+                value = current_node.data
+                if value in visited_nodes:
+                    # current_node is already in the HashSet
+                    # connect prev_node with current_node's next element
+                    # to remove it
+                    prev_node.next_element = current_node.next_element
+                    current_node = current_node.next_element
+                    continue
+                # Visiting currentNode for first time
+                visited_nodes.add(current_node.data)
+                prev_node = current_node
+                current_node = current_node.next_element
+        return
