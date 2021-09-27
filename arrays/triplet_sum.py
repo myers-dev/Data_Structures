@@ -11,7 +11,7 @@ def search_triplets(arr):
         while not stop and j<len(arr)-1:
             k=j+1
             while k<len(arr):
-                print(i,j,k,arr[i] , arr[j] , arr[k],arr[k] + arr[j] + arr[i] )
+                #print(i,j,k,arr[i] , arr[j] , arr[k],arr[k] + arr[j] + arr[i] )
                 if arr[k]<0:
                     print('break!')
                     break
